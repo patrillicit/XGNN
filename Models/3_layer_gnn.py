@@ -16,7 +16,6 @@ from typing_extensions import Literal, TypedDict
 
 from typing import Callable, List, Optional, Tuple
 import joblib
-
 """
 Building the module
 """
@@ -36,12 +35,14 @@ def build_base(dataset):
             self.relu = torch.nn.ReLU(inplace=True)
             self.dropout2 = torch.nn.Dropout(dropout_rate)
             self.conv2 = GCNConv(hidden_dim, num_classes)
+            self.conv1_2 = GCNConv(hidden_dim, hidden_dim)
 
         def forward(self, x: Tensor, edge_index: Tensor) -> torch.Tensor:
           x = self.dropout1(x)
           x = self.conv1(x, edge_index)
           x = self.relu(x)
           x = self.dropout2(x)
+          x = self.conv1_2(x, edge_index)
           x = self.conv2(x, edge_index)
           return x
 
@@ -177,10 +178,6 @@ def build_base(dataset):
     #plt.figure(figsize=(12, 4))
     #plot_history(history, "GCN")
 
-    num_layers = 2
-    joblib.dump(model, "2_layer_GNN")
+    num_layers = 3
+    joblib.dump(model, "3_layer_GNN")
     return model, num_layers
-
-def get_model(filename):
-    loaded_model = joblib.load(filename)
-    return loaded_model

@@ -1,6 +1,9 @@
+#import torch.nn.quantized
 import torch
+#import torch.nn.quantized
 from Datasets.CitationDatasets import *
-from Models.base import build_base
+import Models
+#from Models.base import build_base
 from Explainers.ExplanationManager import explain_gnnexplainer_node, explain_pgmexplainer_node, explain_pgexplainer_node
 from Visualizations.Visualize import plot_expl_nc, custom_to_networkx
 from torch_geometric.data import Data
@@ -30,10 +33,13 @@ def start():
     Model Training
     
     """
+    #2-layer GNN
+    model1, num_layers = Models.base.build_base(cora)
 
-    model1, num_layers = build_base(cora)
-    print(num_layers)
+    #3-layer GNN
 
+
+    quit()
 
     """
     XAI-Methods
