@@ -8,13 +8,14 @@ def ptg_gnnexplainer(model, data):
             model=model,
             algorithm=GNNExplainer(epochs=200),
             explanation_type='model',
-            node_mask_type='object',
+            node_mask_type='attributes',
             edge_mask_type='object',
             model_config=dict(
                 mode='multiclass_classification',
                 task_level='node',
                 return_type='log_probs',  # Model returns log probabilities.
             ),
+            threshold_config=None
         )
 
         # Generate explanation for the node at index `10`:
